@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+
+        }
+        #box1 {
+            width: 105px;
+            height: 150px;
+            margin: 70px auto;
+            position: relative;
+        }
+
+        #box1 img {
+            width: 100%
+            height: 100%;
+            position: absolute;
+            left:0;
+            top: 0;
+            transition: all 1s linear;
+            transform-origin: left bottom;
+        }
+        #box2,#box3,#box4 {
+            width: 425px;
+            height: 150px;
+
+        }
+        #box2 {
+            position: relative;
+            margin: 200px auto;
+        }
+        #box3 {
+            position: absolute;
+            left:20px;
+            top: 60px;
+        }
+        #box4 {
+            position: absolute;
+            right:20px;
+            top: 60px;
+        }
+        #box2 img {
+            position: absolute;
+            left: 170px;
+            top: -350px;
+            transition: all 1s linear;
+
+        }
+        #box3 img {
+            position: absolute;
+            left: 687px;
+            top: 10px;
+            transition: all 1s linear;
+         }
+        #box4 img {
+            position: absolute;
+            right: 687px;
+            top: 10px;
+            z-index:1;
+            transition: all 1s linear;
+        }
+        #box5 {
+            width: 315px;
+            height: 150px;
+            /*background: red;*/
+            position: absolute;
+            top: 70px;
+            left: 600px;
+            display: none;
+        }
+
+
+         #btn1 {
+            width: 100px;
+            height: 50px;
+            font:900 25px/50px '宋体';
+            text-align: center;
+            background: red;
+            border: 1px solid blue;
+            color: #fff;
+            position: absolute;
+            top: 600px;
+            left: 50%;
+            transform: translate(-50%,0);
+
+        }
+        /*@keyframes op{*/
+            /*0%{*/
+                /*opacity:1;*/
+            /*}*/
+            /*100%{*/
+                /*opacity:0;*/
+            /*}*/
+        /*}*/
+        /*@keyframes op1{*/
+            /*0%{*/
+                /*opacity:0;*/
+            /*}*/
+            /*100%{*/
+                /*opacity:1;*/
+            /*}*/
+        /*}*/
+    </style>
+</head>
+<body>
+<div id="box1"></div>
+<div id="box2"></div>
+<div id="box3"></div>
+<div id="box4"></div>
+<div id="box5"></div>
+<button id="btn1">发牌</button>
+<script>
+    var box1=document.querySelector('#box1');
+    var img1=box1.children;
+    var btn1=document.querySelector('#btn1');
+    var box2=document.querySelector('#box2');
+    var box3=document.querySelector('#box3');
+    var box4=document.querySelector('#box4');
+    var box5=document.querySelector('#box5');
+    var bmI=document.createElement('img');
+    bmI.src='images/bm.png';
+    bmI.style.width='105px';
+    bmI.style.height='150px';
+    for(var i=0;i<54;i++){
+      var newI =  document.createElement('img');
+        newI.src='images/'+(i+1)+'.jpg';
+        box1.appendChild(newI);
+    }
+    box1.appendChild(bmI);
+    for(var o=0;o<54;o++){
+        box1.onmouseover=function(){
+            fn();
+        }
+        box1.onmouseout=function(){
+            fn1();
+        }
+    }
+        btn1.onclick=function(){
+            fn();
+            box5.innerHTML='';
+            box5.style.display='none';
+            box2.innerHTML='';
+            box3.innerHTML='';
+            box4.innerHTML='';
+            var arr=[[],[],[],[]];
+            for(var x=0;x<=0;x--){
+                var num=Math.round(Math.random()*53+1);
+                var flag=true;
+                if(arr[0].length<17){
+                    for(var i=0;i<arr[0].length;i++){
+                        if(num==arr[0][i]){
+                            flag=false;
+                        }
+                    }
+                    if(flag){
+                        arr[0].push(num);
+                    }
+                }else{
+                    if(arr[1].length<17){
+                        for(var j=0;j<2;j++){
+                            for(var i=0;i<arr[j].length;i++){
+                                if(num==arr[j][i]){
+                                    flag=false;
+                                }
+                            }
+                        }
+
+                        if(flag){
+                            arr[1].push(num);
+                        }
+                    }else{
+                        if(arr[2].length<17){
+                            for(var j=0;j<3;j++){
+                                for(var i=0;i<arr[j].length;i++){
+                                    if(num==arr[j][i]){
+                                        flag=false;
+                                    }
+                                }
+                            }
+
+                            if(flag){
+                                arr[2].push(num);
+                            }
+                        }else{
+                            if(arr[3].length<4) {
+                                for (var j = 0; j <4; j++) {
+                                    for (var i = 0; i < arr[j].length; i++) {
+                                        if (num == arr[j][i]) {
+                                            flag = false;
+                                        }
+                                    }
+                                }
+
+                                if (flag) {
+                                    arr[3].push(num);
+                                }
+                            }
+                        }
+                    }
+                    if(arr[3].length==3) {
+                        break;
+                    }
+                }
+
+            }
+            console.log(arr[3]);
+
+            var n2=0;
+            var nZ=100;
+
+            var timer1=setInterval(function(){
+                var n1=arr[0][n2];
+                var n3=arr[1][n2];
+                var n4=arr[2][n2];
+                var newI=document.createElement('img');
+                var newI3=document.createElement('img');
+                var newI4=document.createElement('img');
+                newI.src='images/'+n1+'.jpg';
+                newI3.src='images/'+n3+'.jpg';
+                newI4.src='images/'+n4+'.jpg';
+                newI.style.transform='rotate(0deg)';
+                newI3.style.transform='rotate(0deg)';
+                newI4.style.transform='rotate(360deg)';
+                newI4.style.zIndex=nZ;
+                box2.appendChild(newI);
+                box3.appendChild(newI3);
+                box4.appendChild(newI4);
+                animate(newI,{'left':n2*20,'top':0})
+                animate(newI3,{'left':n2*20,'top':0})
+                animate(newI4,{'right':n2*20,'top':0})
+                box1.children[n1].src='';
+                box1.children[n3].src='';
+                box1.children[n4].src='';
+
+                n2++;
+                nZ=nZ-5;
+
+                if(n2==17){
+                    for(var z=0;z<3;z++){
+                        var newI5=document.createElement('img');
+                        newI5.src='images/'+arr[3][z]+'.jpg';
+                        newI5.style.transform='rotate(0deg)';
+                        box5.appendChild(newI5);
+                        box1.children[arr[3][z]].src='';
+                    }
+
+                    fn1();
+
+
+
+                    for(var i=0;i<54;i++){
+                        box1.children[i].src='images/'+(i+1)+'.jpg';
+                    }
+                    box5.style.display='block';
+
+                    clearInterval(timer1);
+                }
+            },300);
+
+    }
+    function getStyle(obj,attr){
+        if(obj.currentStyle){
+            return obj.currentStyle[attr];
+        }
+        return window.getComputedStyle(obj,null)[attr];
+    }
+
+    function animate(obj,json,fn) {
+        clearInterval(obj.timer);
+        obj.timer = setInterval(function () {
+            var flag = true;
+            for (var k in json) {
+                var leader = parseInt(getStyle(obj, k));
+                var step = (json[k] - leader) / 1;
+                step = step > 0 ? Math.ceil(step) : Math.floor(step);
+                leader += step;
+                obj.style[k] = leader + 'px';
+                if (leader != json[k]) {
+                    flag = false;
+                }
+            }
+            if (flag) {
+                clearInterval(obj.timer);
+                if (fn) {
+                    fn();
+                }
+            }
+
+        }, 1)
+    }
+    function fn(){
+        bmI.style.animation='op 1s linear';
+        bmI.style.display='none';
+        for(var i=0;i<54;i++){
+            img1[i].style.transform='rotate('+6.5*i+'deg)';
+        }
+    }
+    function fn1(){
+        bmI.style.animation='op1 1.5s ease';
+        bmI.style.display='block';
+        for(var i=0;i<54;i++){
+            img1[i].style.transform='rotate('+0+'deg)';
+        }
+    }
+</script>
+</body>
+</html>
